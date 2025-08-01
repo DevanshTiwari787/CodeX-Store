@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
+import CartIcon from '../ui/CartIcon';
 
 const navTabs = [
   { id: 'home', label: 'Home', path: '/home' },
@@ -39,6 +40,7 @@ const Navbar: React.FC = () => {
             </Link>
           ))}
         </nav>
+        <CartIcon />
         <button
           className={`navbar-hamburger${mobileOpen ? ' open' : ''}`}
           onClick={handleMenuToggle}
