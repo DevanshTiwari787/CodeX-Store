@@ -7,6 +7,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import { CartProvider } from './contexts/CartContext';
 import CartPage from './pages/CartPage';
+import ProductsPage from './pages/ProductsPage';
 import './App.css';
 
 const App: React.FC = () => {
@@ -42,6 +43,7 @@ const App: React.FC = () => {
               <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/products" element={<ProductsPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="*" element={<Navigate to="/home" replace />} />

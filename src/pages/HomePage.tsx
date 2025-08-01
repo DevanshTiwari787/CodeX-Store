@@ -150,17 +150,29 @@ const HomePage: React.FC = () => {
           .fromTo(speakersTextRef.current, { opacity: 0, x: '25vw' }, { opacity: 1, x: 0, duration: 1, ease: "none" }, 0.5);
       }
     } else {
-      const sections = [
-        { img: imageRef.current, txt: textRef.current },
-        { img: headphonesImageRef.current, txt: headphonesTextRef.current },
-        { img: speakersImageRef.current, txt: speakersTextRef.current }
+      // Only scale images on scroll for mobile, keep positions unchanged
+      const imageSections = [
+        imageRef.current,
+        headphonesImageRef.current,
+        speakersImageRef.current
       ];
-      sections.forEach(section => {
-        if (section.txt) {
-          gsap.fromTo(section.txt, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: section.txt, start: "top 90%", end: "top 40%", toggleActions: "play reverse play reverse", scrub: true } });
-        }
-        if (section.img) {
-          gsap.fromTo(section.img, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: section.img, start: "top 80%", end: "top 30%", toggleActions: "play reverse play reverse", scrub: true } });
+      imageSections.forEach(section => {
+        if (section) {
+          gsap.fromTo(
+            section.querySelector('img'),
+            { scale: 1 },
+            {
+              scale: 1.18,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: section,
+                start: "top 90%",
+                end: "top 20%",
+                scrub: true
+              }
+            }
+          );
         }
       });
     }
