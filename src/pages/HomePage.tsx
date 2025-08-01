@@ -17,42 +17,42 @@ import { useCart } from '../contexts/CartContext';
 gsap.registerPlugin(ScrollTrigger);
 
 const productData = {
-  airpods: {
-    name: 'AirPods Pro',
-    price: '$249',
-    description: 'Premium wireless earbuds with active noise cancellation and immersive sound.',
-    colors: {
-      white: airpodsImg,
-      black: airpodsBlack,
+    airpods: {
+        name: 'AirPods Pro',
+        price: '$249',
+        description: 'AirPods Pro deliver premium wireless audio with active noise cancellation, adaptive EQ, and Transparency mode. Enjoy up to 24 hours of battery life with the charging case, sweat and water resistance, and effortless pairing across Apple devices. Perfect for music, calls, and on-the-go listening.',
+        colors: {
+            white: airpodsImg,
+            black: airpodsBlack,
+        }
+    },
+    headphones: {
+        name: 'Premium Headphones',
+        price: '$299',
+        description: 'Premium Headphones feature studio-quality sound with deep bass, crisp highs, and active noise cancellation. The ergonomic over-ear design ensures comfort for long listening sessions, while Bluetooth 5.0 provides seamless wireless connectivity. Includes built-in microphone and intuitive touch controls.',
+        colors: {
+            white: headphonesImg,
+            black: headphonesBlack,
+        }
+    },
+    speakers: {
+        name: 'Smart Speakers',
+        price: '$199',
+        description: 'Smart Speakers combine powerful audio with voice assistant integration for hands-free control. Enjoy rich, room-filling sound, multi-room connectivity, and modern design that fits any space. Stream music, control smart home devices, and get answers instantly with built-in voice recognition.',
+        colors: {
+            white: speakersImg,
+            black: speakersBlack,
+        }
+    },
+    neckband: {
+        name: 'Wireless Neckband',
+        price: '$129',
+        description: 'Wireless Neckband earphones offer lightweight comfort and up to 18 hours of battery life. Magnetic earbuds, quick charging, and sweat resistance make them ideal for workouts and daily commutes. Enjoy clear calls and dynamic sound with advanced Bluetooth technology.',
+        colors: {
+            white: neckbandImg,
+            black: neckbandBlack,
+        }
     }
-  },
-  headphones: {
-    name: 'Premium Headphones',
-    price: '$299',
-    description: 'Studio-quality over-ear headphones for immersive sound and comfort.',
-    colors: {
-      white: headphonesImg,
-      black: headphonesBlack,
-    }
-  },
-  speakers: {
-    name: 'Smart Speakers',
-    price: '$199',
-    description: 'Voice-controlled smart speakers with premium sound and modern design.',
-    colors: {
-      white: speakersImg,
-      black: speakersBlack,
-    }
-  },
-  neckband: {
-    name: 'Wireless Neckband',
-    price: '$129',
-    description: 'Comfortable wireless neckband earphones with long battery life.',
-    colors: {
-      white: neckbandImg,
-      black: neckbandBlack,
-    }
-  }
 };
 
 const colorOptions = [
@@ -78,6 +78,7 @@ const HomePage: React.FC = () => {
   const [showProduct, setShowProduct] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<'white' | 'black'>('white');
   const [showPopup, setShowPopup] = useState<{ name: string } | null>(null);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   const openProduct = (id: string) => {
     setSelectedColor('white');
@@ -88,8 +89,12 @@ const HomePage: React.FC = () => {
     setShowProduct(null);
   };
 
-  const handleAddToCart = (productId: string, product: typeof productData[keyof typeof productData]) => {
-    // Add item to the cart
+  // Fix: Make addToCart synchronous and avoid async/await, simplify logic
+  const handleAddToCart = (event: React.MouseEvent, productId: string, product: typeof productData[keyof typeof productData]) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Add to cart (synchronous)
     addToCart({
       id: productId,
       name: product.name,
@@ -98,20 +103,22 @@ const HomePage: React.FC = () => {
       color: selectedColor
     });
 
-    // Show a confirmation popup
+    // Show popup
     setShowPopup({ name: product.name });
-    setTimeout(() => setShowPopup(null), 1200);
 
-    // Defer closing the modal to prevent the DOM error
+    // Close modal after a short delay (ensures popup is visible)
     setTimeout(() => {
-      closeProduct();
-    }, 100);
+      setShowProduct(null);
+    }, 300);
+
+    // Hide popup after a longer delay
+    setTimeout(() => setShowPopup(null), 1800);
   };
 
   // Add effect to prevent scrolling when modal is open
   useEffect(() => {
     if (showProduct) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';  
     } else {
       document.body.style.overflow = 'auto';
     }
@@ -206,14 +213,17 @@ const HomePage: React.FC = () => {
             <h2 style={{ fontSize: window.innerWidth < 768 ? '1.8rem' : '2.5rem', color: '#fff', marginBottom: '1.2rem', fontWeight: 800, textShadow: '0 8px 16px rgba(0,0,0,0.8)' }}>{product.name}</h2>
             <div style={{ fontSize: window.innerWidth < 768 ? '1.3rem' : '1.7rem', color: '#fff', fontWeight: 700, marginBottom: '1.2rem', background: 'linear-gradient(135deg, #fff 0%, #60A5FA 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{product.price}</div>
             <div style={{ fontSize: window.innerWidth < 768 ? '1rem' : '1.18rem', color: '#ccc', marginBottom: '2rem', lineHeight: '1.7', maxWidth: '90%' }}>{product.description}</div>
-            <div style={{
-              display: 'flex',
-              gap: '1rem',
-              flexWrap: 'wrap'
-            }}>
-              <button className="airpods-cta" style={{ width: '180px', background: 'linear-gradient(135deg, #fff 0%, #f0f0f0 100%)', color: '#000' }} onClick={() => handleAddToCart(showProduct, product)}>Buy Now</button>
-              <button className="airpods-cta" style={{ width: '180px', background: 'none', border: '2px solid white', color: '#fff' }} onClick={closeProduct}>Close</button>
-            </div>
+            <button 
+              className="airpods-cta"
+              style={{ width: '180px', background: 'none', border: '2px solid white', color: '#fff' }} 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                closeProduct();
+              }}
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>,
@@ -224,7 +234,22 @@ const HomePage: React.FC = () => {
   return (
     <div className="products-showcase">
       {showPopup && (
-        <div style={{ position: 'fixed', top: '2.5rem', right: '2.5rem', background: '#fff', color: '#222', borderRadius: '12px', boxShadow: '0 2px 16px rgba(0,0,0,0.10)', padding: '0.8rem 1.6rem', fontWeight: 600, fontSize: '1.05rem', zIndex: 10001, letterSpacing: '0.5px', transition: 'opacity 0.3s', opacity: showPopup ? 1 : 0 }}>
+        <div style={{ 
+          position: 'fixed', 
+          top: '2.5rem', 
+          right: '2.5rem', 
+          background: '#fff', 
+          color: '#222', 
+          borderRadius: '12px', 
+          boxShadow: '0 2px 16px rgba(0,0,0,0.10)', 
+          padding: '0.8rem 1.6rem', 
+          fontWeight: 600, 
+          fontSize: '1.05rem', 
+          zIndex: 10001, 
+          letterSpacing: '0.5px', 
+          transition: 'opacity 0.3s', 
+          opacity: showPopup ? 1 : 0 
+        }}>
           {showPopup.name} added to cart
         </div>
       )}
@@ -234,7 +259,7 @@ const HomePage: React.FC = () => {
           <img src={airpodsImg} alt="AirPods" className="airpods-image" />
         </section>
         <section className="airpods-text-section" ref={textRef}>
-          <h1 className="airpods-title">Experience true wireless freedom, keep listening wihtout charging breaks</h1>
+          <h1 className="airpods-title">Experience true wireless freedom, keep listening without charging breaks</h1>
           <button className="airpods-cta" onClick={() => openProduct('airpods')}>Learn More</button>
         </section>
       </div>
