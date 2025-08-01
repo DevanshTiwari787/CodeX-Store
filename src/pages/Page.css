@@ -1,9 +1,4 @@
-.page {
-  padding: 6rem 2rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  min-height: calc(100vh - 200px);
-}
+/* Remove all old CTA button styles and start fresh */
 
 .page h1 {
   font-size: 2.5rem;
@@ -97,7 +92,7 @@
 
 .home-main {
   width: 100vw;
-  height: 100vh; /* Remove extra scroll, set to 100vh */
+  height: 100vh;
   background: #000;
   position: relative;
   overflow: hidden;
@@ -107,7 +102,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw; /* Keep initial full width */
+  width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -117,7 +112,7 @@
 }
 
 .airpods-image {
-  width: 80vw; /* Keep original large size for initial position */
+  width: 80vw;
   max-width: 600px;
   height: auto;
   object-fit: contain;
@@ -136,15 +131,16 @@
   justify-content: center;
   align-items: left;
   padding: 1rem;
-  z-index: 1;
+  z-index: 10; /* Ensure text/buttons are above image and ::before/::after */
   will-change: transform;
-  text-align: left;}
+  text-align: left;
+}
 
 .airpods-title {
   font-size: 3.5rem;
   color: #fff;
   font-weight: 800;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   line-height: 1.1;
   text-shadow: 0 8px 16px rgba(0,0,0,0.8);
   text-align: left;
@@ -158,96 +154,54 @@
   text-shadow: 0 4px 8px rgba(0,0,0,0.8);
   text-align: center;
   margin-bottom: 2rem;
-  text-wrap : pretty;
-}
-
-.airpods-cta {
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
-  color: #000;
-  border: none;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(255,255,255,0.2);
-  width: 10rem
-}
-
-.airpods-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(255,255,255,0.3);
-  background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
-}
-
-/* Remove glow effect that was causing visual issues */
-.airpods-glow {
-  display: none;
-}
-.airpods-cta {
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
-  color: #000;
-  border: none;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(255,255,255,0.1);
-}
-
-.airpods-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(255,255,255,0.2);
-  background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+  text-wrap: pretty;
 }
 
 .headphones-main {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(135deg, #000000ff 0%, #000000ff 100%);
-  position: relative;
-  overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #000000ff 0%, #000000ff 100%);
+    position: relative;
+    overflow: hidden;
 }
 
 .headphones-section {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  will-change: transform;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    will-change: transform;
 }
 
 .headphones-image {
-  width: 80vw;
-  max-width: 600px;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 30px 60px rgba(255, 255, 255, 0.15));
-  will-change: transform;
+    width: 80vw;
+    max-width: 600px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 30px 60px rgba(255, 255, 255, 0.15));
+    will-change: transform;
 }
 
 .headphones-text-section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 2rem 4rem;
-  z-index: 1;
-  will-change: transform;
-  text-align: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 4rem;
+    z-index: 1;
+    will-change: transform;
+    text-align: left;
+    margin-left: 2rem;
 }
 
 .speakers-main {
@@ -280,22 +234,32 @@
   will-change: transform;
 }
 
+/* Uniform styling for all product text sections */
+.airpods-text-section,
+.headphones-text-section,
 .speakers-text-section {
   position: absolute;
   top: 0;
-  right: 0;
   width: 50vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 2rem 4rem;
-  z-index: 1;
+  padding: 1rem;
+  z-index: 10; /* Ensure text/buttons are above image and ::before/::after */
   will-change: transform;
   text-align: left;
 }
 
+/* Uniform positioning for text sections */
+.airpods-text-section { right: 0; }
+.headphones-text-section { left: 0; }
+.speakers-text-section { right: 0; }
+
+/* Uniform title styling for all sections */
+.airpods-title,
+.headphones-title,
 .speakers-title {
   font-size: 3.5rem;
   color: #fff;
@@ -306,6 +270,9 @@
   text-align: left;
 }
 
+/* UNIFIED CTA BUTTON STYLES - All three buttons with bottom glow and bounce effect */
+.airpods-cta,
+.headphones-cta,
 .speakers-cta {
   padding: 1rem 2rem;
   background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
@@ -315,13 +282,161 @@
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(255,255,255,0.2);
   width: 10rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 20;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.18);
 }
 
+/* Bottom glow effect only */
+.airpods-cta::after,
+.headphones-cta::after,
+.speakers-cta::after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -6px;
+  height: 18px;
+  border-radius: 0 0 50px 50px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.15) 80%, transparent 100%);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+/* Bounce and glow on hover */
+.airpods-cta:hover,
+.headphones-cta:hover,
 .speakers-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(255,255,255,0.3);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 4px 24px rgba(255,255,255,0.22);
   background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+}
+
+.airpods-cta:hover::after,
+.headphones-cta:hover::after,
+.speakers-cta:hover::after {
+  opacity: 0.5;
+}
+
+/* Restore original image sizes */
+.airpods-image,
+.headphones-image,
+.speakers-image {
+  width: 80vw;
+  max-width: 600px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.15));
+  will-change: transform;
+}
+
+@media (max-width: 900px) {
+  /* Make each product section a full-height flex container */
+  .airpods-main,
+  .headphones-main,
+  .speakers-main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Image section takes top 50% of height */
+  .airpods-section,
+  .headphones-section,
+  .speakers-section {
+    position: relative;
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the image horizontally */
+  }
+
+  /* Text section takes bottom 50% of height */
+  .airpods-text-section,
+  .headphones-text-section,
+  .speakers-text-section {
+    position: relative;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center content horizontally */
+    text-align: center;
+  }
+
+  /* Adjust image size */
+  .airpods-image,
+  .headphones-image,
+  .speakers-image {
+    width: 100%;
+    max-width: 300px;
+    height: 20rem;
+    margin: 0 auto; /* Ensure the image is centered */
+  }
+
+  /* Adjust title size and margin */
+  .airpods-title,
+  .headphones-title,
+  .speakers-title {
+    font-size: 1.5rem;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    width : auto;
+    padding: 0 1rem;
+  }
+
+  /* Adjust button width to match larger screens */
+  .airpods-cta,
+  .headphones-cta,
+  .speakers-cta {
+    width: auto;
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+
+  }
+
+  .headphones-text-section{
+    margin-left : 0px;
+  }
+
+  /* Fix InfiniteMarquee for small screens */
+  .marquee-section {
+    width: 100vw;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+  }
+
+  .marquee-header {
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+
+  .infinite-marquee,
+  .infinite-marquee-track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    overflow-x: auto !important;
+    gap: 1.2rem;
+    /* Prevent animation on mobile, allow manual scroll */
+  }
+
+  .infinite-marquee-item {
+    flex: 0 0 auto;
+    min-width: 120px;
+    max-width: 180px;
+    margin: 0 0.5rem;
+    text-align: center;
+  }
 }

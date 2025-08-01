@@ -88,3 +88,53 @@
   background-clip: text;
   display: block;
 }
+
+@media (max-width: 900px) {
+  .marquee-container {
+    width: 100vw;
+    overflow: hidden;
+    padding: 1.2rem 0;
+    background: #000;
+  }
+
+  .marquee-content {
+    gap: 1rem;
+    /* Reduce gap for mobile */
+    will-change: transform;
+  }
+
+  .marquee-item {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    max-width: 140px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    padding: 0.5rem 0 0.2rem 0;
+  }
+
+  .marquee-img-wrap {
+    height: 70px;
+    min-height: 70px;
+    max-height: 80px;
+  }
+
+  .marquee-image {
+    width: 80%;
+    height: 80%;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 80px;
+    max-height: 80px;
+  }
+
+  .marquee-name {
+    font-size: 1rem;
+    padding: 0.3rem 0 0.2rem 0;
+  }
+
+  .marquee-title {
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+  }
+}

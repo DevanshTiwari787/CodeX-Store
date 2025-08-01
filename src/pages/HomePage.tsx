@@ -26,109 +26,160 @@ const HomePage: React.FC = () => {
   const speakersContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (imageRef.current && textRef.current && containerRef.current) {
-      // Initial animation - AirPods drops from above
-      gsap.fromTo(imageRef.current,
-        { y: '-100vh', opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 2,
-          ease: "power3.out",
-          delay: 0.5
-        }
-      );
+    const isMobile = window.innerWidth <= 900;
 
-      // Main scroll animation - AirPods section
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: '+=100vh', // Reduced from +=400vh to +=100vh
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-        }
-      })
-      .to(imageRef.current, {
-        x: '-25vw',
-        scale: 1.2,
-        duration: 1,
-        ease: "none"
-      })
-      .fromTo(textRef.current,
-        {
-          opacity: 0,
+    // Kill previous triggers to avoid conflicts on resize
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    gsap.globalTimeline.clear();
+
+    if (!isMobile) {
+      // Desktop/tablet GSAP animations (original)
+      if (imageRef.current && textRef.current && containerRef.current) {
+        gsap.fromTo(imageRef.current,
+          { y: '-100vh', opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 2,
+            ease: "power3.out",
+            delay: 0.5
+          }
+        );
+
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: '+=100vh',
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+          }
+        })
+        .to(imageRef.current, {
+          x: '-25vw',
+          scale: 1.2,
+          duration: 1,
+          ease: "none"
+        })
+        .fromTo(textRef.current,
+          {
+            opacity: 0,
+            x: '25vw',
+          },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "none"
+          }, 0.5);
+      }
+
+      if (headphonesImageRef.current && headphonesTextRef.current && headphonesContainerRef.current) {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: headphonesContainerRef.current,
+            start: 'top top',
+            end: '+=400vh',
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+          }
+        })
+        .to(headphonesImageRef.current, {
           x: '25vw',
-        },
-        {
-          opacity: 1,
-          x: 0,
+          scale: 1.1,
           duration: 1,
           ease: "none"
-        }, 0.5);
-    }
+        })
+        .fromTo(headphonesTextRef.current,
+          {
+            opacity: 0,
+            x: '-25vw',
+          },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "none"
+          }, 0.5);
+      }
 
-    // Headphones animation - image on right, text on left
-    if (headphonesImageRef.current && headphonesTextRef.current && headphonesContainerRef.current) {
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: headphonesContainerRef.current,
-          start: 'top top',
-          end: '+=400vh', // Changed back to match AirPods section timing
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-        }
-      })
-      .to(headphonesImageRef.current, {
-        x: '25vw', // Move to right side
-        scale: 1.1,
-        duration: 1,
-        ease: "none"
-      })
-      .fromTo(headphonesTextRef.current,
-        {
-          opacity: 0,
-          x: '-25vw', // Start from left side
-        },
-        {
-          opacity: 1,
-          x: 0,
+      if (speakersImageRef.current && speakersTextRef.current && speakersContainerRef.current) {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: speakersContainerRef.current,
+            start: 'top top',
+            end: '+=400vh',
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+          }
+        })
+        .to(speakersImageRef.current, {
+          x: '-25vw',
+          scale: 1.2,
           duration: 1,
           ease: "none"
-        }, 0.5);
-    }
+        })
+        .fromTo(speakersTextRef.current,
+          {
+            opacity: 0,
+            x: '25vw',
+          },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "none"
+          }, 0.5);
+      }
+    } else {
+      // Mobile: Fade in/out text section on scroll up/down
+      const sections = [
+        { img: imageRef.current, txt: textRef.current },
+        { img: headphonesImageRef.current, txt: headphonesTextRef.current },
+        { img: speakersImageRef.current, txt: speakersTextRef.current }
+      ];
 
-    // Speakers animation - comes from right, settles on left
-    if (speakersImageRef.current && speakersTextRef.current && speakersContainerRef.current) {
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: speakersContainerRef.current,
-          start: 'top top',
-          end: '+=400vh',
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
+      sections.forEach(section => {
+        if (section.txt) {
+          gsap.fromTo(section.txt, {
+            opacity: 0,
+            y: 50,
+          }, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section.txt,
+              start: "top 90%",
+              end: "top 40%",
+              toggleActions: "play reverse play reverse",
+              scrub: true
+            }
+          });
         }
-      })
-      .to(speakersImageRef.current, {
-        x: '-25vw', // Move to left side
-        scale: 1.2,
-        duration: 1,
-        ease: "none"
-      })
-      .fromTo(speakersTextRef.current,
-        {
-          opacity: 0,
-          x: '25vw', // Start from right side
-        },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1,
-          ease: "none"
-        }, 0.5);
+        if (section.img) {
+          gsap.fromTo(section.img, {
+            opacity: 0,
+            y: 50,
+          }, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section.img,
+              start: "top 80%",
+              end: "top 30%",
+              toggleActions: "play reverse play reverse",
+              scrub: true
+            }
+          });
+        }
+      });
     }
 
     return () => {
