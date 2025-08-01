@@ -8,51 +8,59 @@ const CartPage: React.FC = () => {
     <div className="page cart-page" style={{
       marginTop: '6rem',
       minHeight: '80vh',
-      background: 'linear-gradient(135deg, #18181b 0%, #23232b 100%)',
-      padding: '2rem 0'
+      background: '#111',
+      padding: '2rem 1rem'
     }}>
       <h1 style={{
         color: '#fff',
         marginBottom: '2rem',
-        fontSize: '2.3rem',
+        fontSize: '2.5rem',
         fontWeight: 800,
-        textShadow: '0 8px 16px rgba(0,0,0,0.8)'
+        textAlign: 'center',
+        letterSpacing: '-1px',
+        textShadow: '0 4px 12px rgba(0,0,0,0.5)'
       }}>Your Cart</h1>
       {items.length === 0 ? (
         <div style={{
           color: '#ccc',
           fontSize: '1.2rem',
           textAlign: 'center',
-          marginTop: '4rem'
-        }}>Your cart is empty.</div>
+          marginTop: '4rem',
+          padding: '2rem',
+          background: 'rgba(24,24,27,0.5)',
+          borderRadius: '1rem',
+          maxWidth: '500px',
+          margin: '4rem auto'
+        }}>Your cart is currently empty.</div>
       ) : (
         <div style={{
-          maxWidth: '700px',
+          maxWidth: '800px',
           margin: '0 auto',
-          borderRadius: '18px',
-          background: 'rgba(24,24,27,0.95)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
-          padding: '2rem'
         }}>
           {items.map(item => (
             <div key={item.id + item.color} style={{
               display: 'flex',
               alignItems: 'center',
-              background: 'linear-gradient(135deg, #23232b 0%, #18181b 100%)',
-              borderRadius: '1.2rem',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.12)',
+              background: '#18181b',
+              borderRadius: '1rem',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
               marginBottom: '1.5rem',
-              padding: '1.2rem 2rem'
+              padding: '1.5rem',
+              border: '1px solid #2a2a2e',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease'
             }}>
-              <img src={item.image} alt={item.name} style={{
-                width: '80px',
-                height: '80px',
-                borderRadius: '1rem',
-                objectFit: 'contain',
-                marginRight: '2rem',
-                background: 'none',
-                boxShadow: '0 2px 12px rgba(255,255,255,0.08)'
-              }} />
+              <div style={{
+                background: '#2a2a2e',
+                borderRadius: '0.75rem',
+                padding: '0.5rem',
+                marginRight: '1.5rem'
+              }}>
+                <img src={item.image} alt={item.name} style={{
+                  width: '80px',
+                  height: '80px',
+                  objectFit: 'contain',
+                }} />
+              </div>
               <div style={{flex: 1}}>
                 <div style={{
                   fontWeight: 700,
@@ -61,58 +69,43 @@ const CartPage: React.FC = () => {
                   marginBottom: '0.2rem'
                 }}>{item.name}</div>
                 <div style={{
-                  color: '#ccc',
-                  fontSize: '1rem',
+                  color: '#aaa',
+                  fontSize: '0.9rem',
                   marginBottom: '0.5rem'
-                }}>Color: <span style={{
-                  background: item.color === 'white' ? '#fff' : '#222',
-                  color: item.color === 'white' ? '#222' : '#fff',
-                  borderRadius: '8px',
-                  padding: '2px 10px',
-                  fontWeight: 600,
-                  marginLeft: '4px'
-                }}>{item.color}</span></div>
+                }}>Color: {item.color}</div>
                 <div style={{
                   color: '#60A5FA',
                   fontWeight: 700,
-                  fontSize: '1.1rem',
-                  marginBottom: '0.2rem'
+                  fontSize: '1.1rem'
                 }}>{item.price}</div>
               </div>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.7rem'
+                gap: '0.8rem'
               }}>
                 <button 
                   style={{
-                    width: '32px', height: '32px', borderRadius: '50%', background: '#fff', color: '#222', fontWeight: 700, fontSize: '1.2rem', border: 'none', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.10)'
+                    width: '30px', height: '30px', borderRadius: '50%', background: '#333', color: '#fff', fontWeight: 700, fontSize: '1.2rem', border: 'none', cursor: 'pointer'
                   }}
                   onClick={() => updateQuantity(item.id, item.color, item.quantity - 1)}
                 >-</button>
                 <span style={{
                   color: '#fff',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   fontSize: '1.1rem',
-                  minWidth: '32px',
+                  minWidth: '30px',
                   textAlign: 'center'
                 }}>{item.quantity}</span>
                 <button 
                   style={{
-                    width: '32px', height: '32px', borderRadius: '50%', background: '#fff', color: '#222', fontWeight: 700, fontSize: '1.2rem', border: 'none', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.10)'
+                    width: '30px', height: '30px', borderRadius: '50%', background: '#333', color: '#fff', fontWeight: 700, fontSize: '1.2rem', border: 'none', cursor: 'pointer'
                   }}
                   onClick={() => updateQuantity(item.id, item.color, item.quantity + 1)}
                 >+</button>
                 <button 
                   style={{
-                    marginLeft: '1rem',
-                    background: 'none',
-                    color: '#f00',
-                    border: 'none',
-                    fontWeight: 700,
-                    fontSize: '1rem',
-                    cursor: 'pointer',
-                    textDecoration: 'underline'
+                    marginLeft: '1.5rem', background: 'none', color: '#ff4d4d', border: 'none', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer'
                   }}
                   onClick={() => removeFromCart(item.id, item.color)}
                 >Remove</button>
@@ -122,18 +115,22 @@ const CartPage: React.FC = () => {
           <div style={{
             textAlign: 'right',
             fontSize: '1.3rem',
-            fontWeight: 700,
+            fontWeight: 600,
             color: '#fff',
-            marginTop: '2rem',
-            borderTop: '1px solid #333',
-            paddingTop: '1.2rem'
+            marginTop: '2.5rem',
+            background: '#18181b',
+            padding: '1.5rem 2rem',
+            borderRadius: '1rem',
+            border: '1px solid #2a2a2e',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
           }}>
-            Total: <span style={{
+            Total Price: <span style={{
               color: '#60A5FA',
               fontWeight: 800,
-              fontSize: '1.4rem'
+              fontSize: '1.5rem',
+              marginLeft: '1rem'
             }}>
-              Rs. {totalPrice.toLocaleString('en-IN', {maximumFractionDigits: 2})}/-
+              ${totalPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
             </span>
           </div>
         </div>
@@ -141,5 +138,6 @@ const CartPage: React.FC = () => {
     </div>
   );
 };
+
 
 export default CartPage;

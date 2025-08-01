@@ -86,30 +86,26 @@ const HomePage: React.FC = () => {
 
   const closeProduct = () => {
     setShowProduct(null);
-    // Delay unmounting to allow animations to complete
-    setTimeout(() => setIsModalMounted(false), 300);
   };
 
   const handleAddToCart = (productId: string, product: typeof productData[keyof typeof productData]) => {
-    try {
-      addToCart({
-        id: productId,
-        name: product.name,
-        price: product.price,
-        image: product.colors[selectedColor],
-        color: selectedColor
-      });
-      setShowPopup({ name: product.name });
-      setTimeout(() => setShowPopup(null), 1200);
+    // Add item to the cart
+    addToCart({
+      id: productId,
+      name: product.name,
+      price: product.price,
+      image: product.colors[selectedColor],
+      color: selectedColor
+    });
 
-      // Defer closing the modal to the next event loop tick to prevent the error.
-      setTimeout(() => closeProduct(), 0);
+    // Show a confirmation popup
+    setShowPopup({ name: product.name });
+    setTimeout(() => setShowPopup(null), 1200);
 
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-      // Still close modal on error
-      setTimeout(() => closeProduct(), 0);
-    }
+    // Defer closing the modal to prevent the DOM error
+    setTimeout(() => {
+      closeProduct();
+    }, 100);
   };
 
   // Add effect to prevent scrolling when modal is open
@@ -215,32 +211,8 @@ const HomePage: React.FC = () => {
               gap: '1rem',
               flexWrap: 'wrap'
             }}>
-              <button 
-                className="airpods-cta" 
-                style={{
-                  width: '180px',
-                  background: 'linear-gradient(135deg, #fff 0%, #f0f0f0 100%)',
-                  color: '#000'
-                }} 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddToCart(showProduct!, product);
-                }}
-              >
-                Buy Now
-              </button>
-              <button
-                className="airpods-cta"
-                style={{
-                  width: '180px',
-                  background: 'none',
-                  border: '2px solid white',
-                  color: '#fff'
-                }}
-                onClick={closeProduct}
-              >
-                Close
-              </button>
+              <button className="airpods-cta" style={{ width: '180px', background: 'linear-gradient(135deg, #fff 0%, #f0f0f0 100%)', color: '#000' }} onClick={() => handleAddToCart(showProduct, product)}>Buy Now</button>
+              <button className="airpods-cta" style={{ width: '180px', background: 'none', border: '2px solid white', color: '#fff' }} onClick={closeProduct}>Close</button>
             </div>
           </div>
         </div>

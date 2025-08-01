@@ -6,7 +6,6 @@ import CartIcon from '../ui/CartIcon';
 const navTabs = [
   { id: 'home', label: 'Home', path: '/home' },
   { id: 'about', label: 'About', path: '/about' },
-  { id: 'technology', label: 'Technology', path: '/technology' },
   { id: 'contact', label: 'Contact', path: '/contact' }
 ];
 
