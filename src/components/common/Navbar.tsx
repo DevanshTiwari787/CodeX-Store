@@ -4,7 +4,6 @@ import './Navbar.css';
 
 const navTabs = [
   { id: 'home', label: 'Home', path: '/home' },
-  { id: 'products', label: 'Products', path: '/products' },
   { id: 'about', label: 'About', path: '/about' },
   { id: 'technology', label: 'Technology', path: '/technology' },
   { id: 'contact', label: 'Contact', path: '/contact' }
