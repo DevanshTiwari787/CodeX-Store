@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
@@ -11,28 +11,6 @@ import ProductsPage from './pages/ProductsPage';
 import './App.css';
 
 const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return (
-      <>
-      <div className="loading-screen">
-        <div className="loading-content">
-          <div className="loading-logo">Gada Electronics</div>
-          <div className="loading-spinner"></div>
-        </div>
-      </div>
-      </>      
-    );
-  }
-
   return (
     <Router>
       <CartProvider>

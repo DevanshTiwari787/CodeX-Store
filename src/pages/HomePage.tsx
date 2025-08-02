@@ -128,9 +128,11 @@ const HomePage: React.FC = () => {
   }, [showProduct]);
 
   useEffect(() => {
-    const isMobile = window.innerWidth <= 900;
+    // Clean up any existing ScrollTriggers first
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     gsap.globalTimeline.clear();
+
+    const isMobile = window.innerWidth <= 900;
 
     if (!isMobile) {
       if (imageRef.current && textRef.current && containerRef.current) {
@@ -162,7 +164,7 @@ const HomePage: React.FC = () => {
             section.querySelector('img'),
             { scale: 1 },
             {
-              scale: 1.18,
+              scale: 1.2,
               duration: 1,
               ease: "power3.out",
               scrollTrigger: {
@@ -176,8 +178,17 @@ const HomePage: React.FC = () => {
         }
       });
     }
+    // Cleanup function - this is crucial for proper navigation
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      gsap.globalTimeline.clear();
+      // Reset any transforms that might interfere
+      if (imageRef.current) gsap.set(imageRef.current, { clearProps: "all" });
+      if (textRef.current) gsap.set(textRef.current, { clearProps: "all" });
+      if (headphonesImageRef.current) gsap.set(headphonesImageRef.current, { clearProps: "all" });
+      if (headphonesTextRef.current) gsap.set(headphonesTextRef.current, { clearProps: "all" });
+      if (speakersImageRef.current) gsap.set(speakersImageRef.current, { clearProps: "all" });
+      if (speakersTextRef.current) gsap.set(speakersTextRef.current, { clearProps: "all" });
     };
   }, []);
 

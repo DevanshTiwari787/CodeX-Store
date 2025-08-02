@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import './Navbar.css';
 import CartIcon from '../ui/CartIcon';
 
@@ -11,58 +11,26 @@ const navTabs = [
 ];
 
 const Navbar: React.FC = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  const handleMenuToggle = () => setMobileOpen(!mobileOpen);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <header className={`navbar${isScrolled ? ' scrolled' : ''}`}>
+    <header className="navbar">
       <div className="navbar-container" style={{maxWidth: '100%', margin: 0, paddingLeft: '2rem', paddingRight: '2rem'}}>
-        <Link to="/home" className="navbar-logo">Gada Electronics</Link>
+        <a href="/home" className="navbar-logo">SoundSpace</a>
         <nav className="navbar-tabs">
           {navTabs.map(tab => (
-            <Link 
+            <a 
               key={tab.id} 
-              to={tab.path} 
+              href={tab.path} 
               className={`navbar-tab ${location.pathname === tab.path ? 'active' : ''}`}
             >
               {tab.label}
-            </Link>
+            </a>
           ))}
         </nav>
         <CartIcon />
-        <button
-          className={`navbar-hamburger${mobileOpen ? ' open' : ''}`}
-          onClick={handleMenuToggle}
-          aria-label="Toggle menu"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        {/* Remove hamburger and mobile nav for simplicity */}
       </div>
-      <nav className={`navbar-mobile${mobileOpen ? ' open' : ''}`}>
-        {navTabs.map(tab => (
-          <Link
-            key={tab.id}
-            to={tab.path}
-            className={`navbar-mobile-tab ${location.pathname === tab.path ? 'active' : ''}`}
-            onClick={() => setMobileOpen(false)}
-          >
-            {tab.label}
-          </Link>
-        ))}
-      </nav>
     </header>
   );
 };

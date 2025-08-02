@@ -124,15 +124,17 @@ const Products: React.FC = () => {
       </div>
 
       {/* Products Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '2.5rem',
-        maxWidth: '900px',
-        margin: '0 auto',
-        position: 'relative',
-        zIndex: 1
-      }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: window.innerWidth <= 900 ? '1fr' : 'repeat(2, 1fr)',
+          gap: '2.5rem',
+          maxWidth: window.innerWidth <= 900 ? '100%' : '900px',
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 1
+        }}
+      >
         {Object.entries(productData).map(([key, product]) => (
           <div key={key} style={{
             background: '#18181b',
