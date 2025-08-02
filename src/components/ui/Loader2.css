@@ -1,0 +1,85 @@
+.loader2-screen {
+  text-align: center;
+  max-width: 100%;
+  width: 600px;
+  margin: 0 auto;
+  background: #111;
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader2-title {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  white-space: nowrap;
+  font-family: "Audiowide", sans-serif;
+}
+
+.loader2-title span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(4px);
+}
+
+.loader2-title span.space {
+  width: 16px;
+}
+
+.loader2-progress {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.loader2-percentage {
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #ffffff;
+}
+
+.loader2-bar {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.loader2-bar-part {
+  width: clamp(4px, 1.5vw, 6px);
+  height: clamp(16px, 4vw, 36px);
+  background: #222;
+  border-radius: 2px;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.loader2-bar-part.active {
+  background: #60A5FA;
+  box-shadow: 0 0 6px #29b1f5;
+}
+
+@media (max-width: 600px) {
+  .loader2-screen {
+    width: 98vw;
+    padding: 2rem 0.5rem;
+    border-radius: 10px;
+  }
+  .loader2-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .loader2-bar {
+    margin-top: 18px;
+  }
+}
