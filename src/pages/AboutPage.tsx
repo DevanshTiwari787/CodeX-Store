@@ -85,7 +85,7 @@ const AboutPage: React.FC = () => {
           display: 'flex',
           alignItems: 'center',
           height: '100vh',
-          width: `${aboutCards.length * 100}vw`, // Width = number of cards * 100vw
+          width: `${aboutCards.length * 100}vw`,
           position: 'absolute',
           marginTop: '1rem',
           marginBottom: '1rem',
@@ -107,26 +107,29 @@ const AboutPage: React.FC = () => {
               padding: '2rem'
             }}
           >
-            {/* Modern Large Card */}
-            <div style={{
-              background: 'linear-gradient(145deg, #000 0%, #1a1a1a 100%)',
-              color: 'white',
-              borderRadius: '32px',
-              padding: '4rem 3rem',
-              width: '85vw',
-              maxWidth: '800px',
-              height: '75vh',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
-              border: '1px solid rgba(255,255,255,0.15)',
-              position: 'relative',
-              overflow: 'hidden',
-              margin: '1rem'
-            }}>
+            <div
+              style={{
+                background: 'linear-gradient(145deg, #000 0%, #1a1a1a 100%)',
+                color: 'white',
+                borderRadius: '32px',
+                padding: '4rem 3rem',
+                width: '85vw',
+                maxWidth: '800px',
+                height: '75vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                position: 'relative',
+                overflow: 'hidden',
+                margin: '1rem'
+              }}
+              // Responsive styles for small screens
+              className="about-card"
+            >
               {/* Background Gradient Overlay */}
               <div style={{
                 position: 'absolute',
@@ -251,35 +254,59 @@ const AboutPage: React.FC = () => {
           #about-page {
             overflow-x: hidden !important;
           }
-          
-          @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.1); }
+          @media (max-width: 1200px) {
+            #about-cards-container > div > .about-card {
+              max-width: 600px !important;
+              padding: 2.2rem 1.2rem !important;
+              height: 60vh !important;
+            }
+            #about-cards-container > div > .about-card h2 {
+              font-size: 1.6rem !important;
+            }
+            #about-cards-container > div > .about-card p {
+              font-size: 1rem !important;
+            }
           }
-          
           @media (max-width: 900px) {
-            #about-cards-container > div > div {
-              padding: 2.5rem 2rem !important;
-              width: 95vw !important;
-              height: 80vh !important;
-              max-width: none !important;
+            #about-cards-container > div > .about-card {
+              max-width: 400px !important;
+              min-width: 180px !important;
+              padding: 1.2rem 0.6rem !important;
+              height: 45vh !important;
+              border-radius: 18px !important;
             }
-            
-            #about-cards-container > div > div h2 {
-              font-size: 2rem !important;
+            #about-cards-container > div > .about-card h2 {
+              font-size: 1.2rem !important;
+              padding: 0.2rem !important;
             }
-            
-            #about-cards-container > div > div p {
-              font-size: 1.1rem !important;
+            #about-cards-container > div > .about-card p {
+              font-size: 0.95rem !important;
+              margin-bottom: 0.8rem !important;
             }
-            
-            #about-cards-container > div > div > div:nth-child(2) > div:first-child {
-              fontSize: 3.5rem !important;
+            #about-cards-container > div > .about-card > div:nth-child(2) > div:first-child {
+              font-size: 2.2rem !important;
+              margin-bottom: 0.7rem !important;
             }
-
-            #about-cards-container > div > div > div:nth-child(2) > div:first-child {
-              position: static !important;
-              margin-bottom: 1rem !important;
+          }
+          @media (max-width: 600px) {
+            #about-cards-container > div > .about-card {
+              max-width: 95vw !important;
+              min-width: 120px !important;
+              padding: 0.7rem 0.2rem !important;
+              border-radius: 12px !important;
+              height: 35vh !important;
+            }
+            #about-cards-container > div > .about-card h2 {
+              font-size: 1rem !important;
+              padding: 0.1rem !important;
+            }
+            #about-cards-container > div > .about-card p {
+              font-size: 0.85rem !important;
+              margin-bottom: 0.5rem !important;
+            }
+            #about-cards-container > div > .about-card > div:nth-child(2) > div:first-child {
+              font-size: 1.5rem !important;
+              margin-bottom: 0.5rem !important;
             }
           }
         `}

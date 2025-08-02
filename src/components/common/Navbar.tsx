@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Navbar.css';
 import CartIcon from '../ui/CartIcon';
@@ -12,6 +12,7 @@ const navTabs = [
 
 const Navbar: React.FC = () => {
   const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <header className="navbar">
@@ -28,9 +29,30 @@ const Navbar: React.FC = () => {
             </a>
           ))}
         </nav>
+        <button
+          className={`navbar-hamburger${mobileOpen ? ' open' : ''}`}
+          onClick={() => setMobileOpen(open => !open)}
+          aria-label="Toggle navigation"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
         <CartIcon />
-        {/* Remove hamburger and mobile nav for simplicity */}
       </div>
+      {/* Mobile dropdown */}
+      <nav className={`navbar-mobile${mobileOpen ? ' open' : ''}`}>
+        {navTabs.map(tab => (
+          <a
+            key={tab.id}
+            href={tab.path}
+            className={`navbar-mobile-tab${location.pathname === tab.path ? ' active' : ''}`}
+            onClick={() => setMobileOpen(false)}
+          >
+            {tab.label}
+          </a>
+        ))}
+      </nav>
     </header>
   );
 };
