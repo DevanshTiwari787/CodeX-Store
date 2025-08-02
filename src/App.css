@@ -101,3 +101,36 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #00d4ff;
 }
+
+.ripple-circle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(96,165,250,0.25) 0%, rgba(96,165,250,0.05) 80%, transparent 100%);
+  transform: translate(-50%, -50%) scale(0);
+  will-change: transform, opacity;
+  z-index: 9999;
+}
+
+.ripple-gel {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 40%, rgba(96,165,250,0.18) 0%, rgba(255,255,255,0.12) 40%, rgba(96,165,250,0.08) 80%, transparent 100%);
+  box-shadow: 0 4px 24px 8px rgba(96,165,250,0.18), 0 0 0 10px rgba(255,255,255,0.08) inset;
+  border: 1.5px solid rgba(96,165,250,0.18);
+  transform: translate(-50%, -50%) scale(0.5);
+  will-change: transform, opacity, filter;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  backdrop-filter: blur(2px) brightness(1.2);
+  transition: filter 0.2s;
+}

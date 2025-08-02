@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ansukshaImg from "../assets/anushka.jpg"
+import devanshImg from "../assets/devansh.jpg"
 import './Page.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -32,9 +34,23 @@ const aboutCards = [
   }
 ];
 
+const teamMembers = [
+  {
+    name: 'Devansh Tiwari',
+    role: 'Full Stack Developer',
+    image: devanshImg
+  },
+  {
+    name: 'Anushka Yadav',
+    role: 'Frontend Developer',
+    image: ansukshaImg
+  },
+];
+
 const AboutPage: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [hoveredMember, setHoveredMember] = useState<number | null>(null);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -66,12 +82,12 @@ const AboutPage: React.FC = () => {
   }, []);
 
   return (
-    <div 
+    <div
       id="about-page"
       ref={containerRef}
       style={{
         width: '100vw',
-        height: '100vh',
+        minHeight: '100vh',
         background: '#111',
         color: '#fff',
         overflow: 'hidden',
@@ -79,7 +95,7 @@ const AboutPage: React.FC = () => {
       }}
     >
       {/* Cards Container - Horizontal Scroll */}
-      <div 
+      <div
         id="about-cards-container"
         style={{
           display: 'flex',
@@ -140,10 +156,10 @@ const AboutPage: React.FC = () => {
                 background: `radial-gradient(circle at ${30 + idx * 20}% ${40 + idx * 15}%, rgba(96,165,250,0.1) 0%, transparent 70%)`,
                 zIndex: 1
               }} />
-              
+
               {/* Content */}
               <div style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-                
+
 
                 {/* Card Icon */}
                 <div style={{
@@ -154,7 +170,7 @@ const AboutPage: React.FC = () => {
                 }}>
                   {card.icon}
                 </div>
-                
+
                 {/* Card Title */}
                 <h2 style={{
                   fontSize: '2.8rem',
@@ -167,11 +183,11 @@ const AboutPage: React.FC = () => {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  padding : '0.6rem'
+                  padding: '0.6rem'
                 }}>
                   {card.title}
                 </h2>
-                
+
                 {/* Card Description */}
                 <p style={{
                   fontSize: '1.4rem',
@@ -186,7 +202,7 @@ const AboutPage: React.FC = () => {
                 </p>
 
                 {/* Decorative Elements */}
-                
+
               </div>
 
               {/* Corner Accents */}
@@ -201,7 +217,7 @@ const AboutPage: React.FC = () => {
                 borderBottom: 'transparent',
                 borderRadius: '16px 0 0 0'
               }} />
-              
+
               <div style={{
                 position: 'absolute',
                 bottom: '1rem',
@@ -218,35 +234,197 @@ const AboutPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Enhanced Progress Indicator */}
+      {/* Enhanced Progress Indicator - move outside the absolute container, below the card section */}
       <div style={{
-        position: 'absolute',
-        bottom: '2rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
+        position: 'relative',
+        width: '100vw',
+        marginTop: 'calc(92vh)',
         display: 'flex',
-        gap: '1.2rem',
-        zIndex: 10,
-        background: 'rgba(0,0,0,0.3)',
-        padding: '0.8rem 1.5rem',
-        borderRadius: '25px',
-        backdropFilter: 'blur(10px)',
-        border: '1px solid rgba(255,255,255,0.1)'
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 10
       }}>
-        {aboutCards.map((_, idx) => (
-          <div
-            key={idx}
-            style={{
-              width: '12px',
-              height: '12px',
-              borderRadius: '50%',
-              background: idx === activeCardIndex ? '#fff' : 'rgba(0, 0, 0, 0.6)',
-              transition: 'all 0.3s',
-              boxShadow: idx === activeCardIndex ? '0 0 12px rgba(255,255,255,0.5)' : 'none',
-              transform: idx === activeCardIndex ? 'scale(1.2)' : 'scale(1)'
-            }}
-          />
-        ))}
+        <div style={{
+          display: 'flex',
+          gap: '1.2rem',
+          background: 'rgba(0,0,0,0.3)',
+          padding: '0.8rem 1.5rem',
+          borderRadius: '25px',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          {aboutCards.map((_, idx) => (
+            <div
+              key={idx}
+              style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: idx === activeCardIndex ? '#fff' : 'rgba(0, 0, 0, 0.6)',
+                transition: 'all 0.3s',
+                boxShadow: idx === activeCardIndex ? '0 0 12px rgba(255,255,255,0.5)' : 'none',
+                transform: idx === activeCardIndex ? 'scale(1.2)' : 'scale(1)'
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Team Section */}
+      <div
+        style={{
+          width: '100vw',
+          marginTop: '4rem',
+          padding: '0 0 6rem 0',
+          background: 'transparent',
+          position: 'relative',
+          zIndex: 2
+        }}
+        className="about-team-section"
+      >
+        <h1 style={{
+          fontSize: '2.7rem',
+          fontWeight: 800,
+          color: '#fff',
+          textAlign: 'center',
+          marginBottom: '3.5rem',
+          letterSpacing: '-1px',
+          background: 'linear-gradient(135deg, #fff 0%, #60A5FA 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}>
+          Meet the incredible team
+        </h1>
+        <div style={{
+          maxWidth: '700px',
+          margin: '0 auto',
+          position: 'relative',
+          background: 'none'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            position: 'relative'
+          }}>
+            {teamMembers.map((member, idx) => (
+              <div
+                key={member.name}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  background: hoveredMember === idx ? '#2563EB' : 'transparent',
+                  color: hoveredMember === idx ? '#fff' : '#fff',
+                  borderRadius: '8px',
+                  padding: '0.7rem 2rem',
+                  fontSize: '1.35rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  position: 'relative',
+                  transition: 'background 0.3s, color 0.3s',
+                  objectFit: 'cover',
+                }}
+                onMouseEnter={() => setHoveredMember(idx)}
+                onMouseLeave={() => setHoveredMember(null)}
+              >
+                <span style={{
+                  fontWeight: 700,
+                  fontSize: '1.1rem',
+                  color: hoveredMember === idx ? '#fff' : '#60A5FA',
+                  marginRight: '1.5rem',
+                  width: '40px',
+                  textAlign: 'center',
+                  opacity: hoveredMember === idx ? 1 : 0.7,
+                  fontFamily: 'sans-serif',  
+                  verticalAlign: 'middle'
+                }}>
+                  {String(idx + 1).padStart(2 , '0')}
+                </span>
+                <span style={{
+                  flex: 1,
+                  color: hoveredMember === idx ? '#fff' : '#fff',
+                  fontFamily: 'sans-serif',  
+                  letterSpacing: '0.5px'
+                }}>
+                  {member.name}
+                </span>
+                <span style={{
+                  fontWeight: 700,
+                  fontSize: '1.1rem',
+                  color: hoveredMember === idx ? '#fff' : '#ccc',
+                  marginLeft: '2rem',
+                  opacity: hoveredMember === idx ? 1 : 0.7
+                }}>
+                  {member.role}
+                </span>
+                {/* Floating Image */}
+                {hoveredMember === idx && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: '50%',
+                      top: '50%',
+                      transform: 'translate(-50%, -60%)',
+                      zIndex: 10,
+                      pointerEvents: 'none',
+                      transition: 'opacity 0.25s, transform 0.25s',
+                      opacity: 1
+                    }}
+                  >
+                    <div style={{
+                      width: '180px',
+                      height: '180px',
+                      borderRadius: '50%',
+                      background: 'rgba(255,255,255,0.13)',
+                      boxShadow: '0 8px 32px rgba(96,165,250,0.18)',
+                      border: '2px solid #fff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                      transition: 'box-shadow 0.25s, border 0.25s'
+                    }}>
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          objectPosition: 'center',
+                          borderRadius: '50%',
+                          filter: 'none',
+
+                          // Anti-pixelation properties
+                          WebkitBackfaceVisibility: 'hidden', // Prevents blurriness in webkit
+                          backfaceVisibility: 'hidden',
+                          WebkitTransform: 'translateZ(0)', // Hardware acceleration
+
+                          // Ensure crisp edges
+                          WebkitFontSmoothing: 'antialiased',
+                          MozOsxFontSmoothing: 'grayscale',
+
+                      
+
+                          // Smooth transitions if any transforms are applied
+                          transition: 'transform 0.3s ease',
+
+                          // Ensure no unwanted scaling
+                          maxWidth: '100%',
+                          maxHeight: '100%',
+
+                        }}
+
+                       
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <style>
@@ -287,6 +465,21 @@ const AboutPage: React.FC = () => {
               font-size: 2.2rem !important;
               margin-bottom: 0.7rem !important;
             }
+            .about-team-section {
+              padding: 0 0 3rem 0 !important;
+            }
+            .about-team-section h1 {
+              font-size: 1.5rem !important;
+              margin-bottom: 2rem !important;
+            }
+            .about-team-section > div > div {
+              font-size: 1rem !important;
+              padding: 0.5rem 1rem !important;
+            }
+            .about-team-section > div > div > div {
+              width: 120px !important;
+              height: 120px !important;
+            }
           }
           @media (max-width: 600px) {
             #about-cards-container > div > .about-card {
@@ -301,7 +494,7 @@ const AboutPage: React.FC = () => {
               padding: 0.1rem !important;
             }
             #about-cards-container > div > .about-card p {
-              font-size: 0.85rem !important;
+              fontSize: 0.85rem !important;
               margin-bottom: 0.5rem !important;
             }
             #about-cards-container > div > .about-card > div:nth-child(2) > div:first-child {
