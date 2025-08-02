@@ -2,9 +2,10 @@
 
 SoundSpace is a modern React-based e-commerce site for premium audio products. It features animated product showcases, a persistent cart, and smooth navigation, designed for both desktop and mobile experiences.
 
-##VIDEO DEMONSTRATION
+## VIDEO DEMONSTRATION
 
 https://github.com/user-attachments/assets/363b5ad9-ba9d-4343-ae24-91e81c603923
+
 https://github.com/user-attachments/assets/8627110b-724f-493a-83b6-1d9992e5be65
 
 
