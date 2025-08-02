@@ -25,14 +25,15 @@ const InfiniteMarquee: React.FC<InfiniteMarqueeProps> = ({
   const animationRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
-    if (marqueeRef.current && contentRef.current) {
+    const contentEl = contentRef.current;
+    if (marqueeRef.current && contentEl) {
       // Infinite marquee: seamless loop using GSAP modifiers
-      const marqueeWidth = contentRef.current.scrollWidth;
-      gsap.set(contentRef.current, { x: 0 });
+      const marqueeWidth = contentEl.scrollWidth;
+      gsap.set(contentEl, { x: 0 });
 
       if (animationRef.current) animationRef.current.kill();
 
-      animationRef.current = gsap.to(contentRef.current, {
+      animationRef.current = gsap.to(contentEl, {
         x: direction === 'left' ? -marqueeWidth / 2 : marqueeWidth / 2,
         duration: speed,
         ease: 'none',
@@ -51,9 +52,9 @@ const InfiniteMarquee: React.FC<InfiniteMarqueeProps> = ({
 
       const handleResize = () => {
         if (animationRef.current) animationRef.current.kill();
-        gsap.set(contentRef.current, { x: 0 });
-        const newWidth = contentRef.current.scrollWidth;
-        animationRef.current = gsap.to(contentRef.current, {
+        gsap.set(contentEl, { x: 0 });
+        const newWidth = contentEl.scrollWidth;
+        animationRef.current = gsap.to(contentEl, {
           x: direction === 'left' ? -newWidth / 2 : newWidth / 2,
           duration: speed,
           ease: 'none',
