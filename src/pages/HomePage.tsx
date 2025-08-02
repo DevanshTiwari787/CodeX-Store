@@ -12,7 +12,6 @@ import headphonesBlack from '../assets/headphones_black.png';
 import speakersBlack from '../assets/speakers_black.png';
 import neckbandBlack from '../assets/neckband_black.png';
 import InfiniteMarquee from '../components/ui/InfiniteMarquee';
-import { useCart } from '../contexts/CartContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -73,12 +72,12 @@ const HomePage: React.FC = () => {
   const speakersTextRef = useRef<HTMLDivElement>(null);
   const speakersContainerRef = useRef<HTMLDivElement>(null);
 
-  const { addToCart } = useCart();
+
 
   const [showProduct, setShowProduct] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<'white' | 'black'>('white');
-  const [showPopup, setShowPopup] = useState<{ name: string } | null>(null);
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
+
+
 
   const openProduct = (id: string) => {
     setSelectedColor('white');
@@ -90,30 +89,7 @@ const HomePage: React.FC = () => {
   };
 
   // Fix: Make addToCart synchronous and avoid async/await, simplify logic
-  const handleAddToCart = (event: React.MouseEvent, productId: string, product: typeof productData[keyof typeof productData]) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    // Add to cart (synchronous)
-    addToCart({
-      id: productId,
-      name: product.name,
-      price: product.price,
-      image: product.colors[selectedColor],
-      color: selectedColor
-    });
-
-    // Show popup
-    setShowPopup({ name: product.name });
-
-    // Close modal after a short delay (ensures popup is visible)
-    setTimeout(() => {
-      setShowProduct(null);
-    }, 300);
-
-    // Hide popup after a longer delay
-    setTimeout(() => setShowPopup(null), 1800);
-  };
+  
 
   // Add effect to prevent scrolling when modal is open
   useEffect(() => {
@@ -344,27 +320,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="products-showcase">
-      {showPopup && (
-        <div style={{ 
-          position: 'fixed', 
-          top: '2.5rem', 
-          right: '2.5rem', 
-          background: '#fff', 
-          color: '#222', 
-          borderRadius: '12px', 
-          boxShadow: '0 2px 16px rgba(0,0,0,0.10)', 
-          padding: '0.8rem 1.6rem', 
-          fontWeight: 600, 
-          fontSize: '1.05rem', 
-          zIndex: 10001, 
-          letterSpacing: '0.5px', 
-          transition: 'opacity 0.3s', 
-          opacity: showPopup ? 1 : 0 
-        }}>
-          {showPopup.name} added to cart
-        </div>
-      )}
+    <div className="home-page">
       <ProductModal />
       <div className="home-main" ref={containerRef}>
         <section className="airpods-section" ref={imageRef}>
