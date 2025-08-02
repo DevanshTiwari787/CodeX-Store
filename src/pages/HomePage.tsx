@@ -12,8 +12,6 @@ import headphonesBlack from '../assets/headphones_black.png';
 import speakersBlack from '../assets/speakers_black.png';
 import neckbandBlack from '../assets/neckband_black.png';
 import InfiniteMarquee from '../components/ui/InfiniteMarquee';
-import devanshImg from '../assets/devansh.jpg';
-import ansukshaImg from '../assets/anushka.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
