@@ -1,5 +1,6 @@
 import React from 'react';
 import './Page.css';
+import GlassCursorSimple from '../components/ui/GlassCursorSimple';
 
 const ContactPage: React.FC = () => {
   return (
@@ -13,9 +14,11 @@ const ContactPage: React.FC = () => {
         margin: '0',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        cursor: 'none'
       }}
     >
+      <GlassCursorSimple />
       <div
         style={{
           width: '100%',

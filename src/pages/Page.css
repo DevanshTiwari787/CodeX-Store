@@ -301,7 +301,7 @@
   bottom: -6px;
   height: 18px;
   border-radius: 0 0 50px 50px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.15) 80%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255, 255, 255, 1) 80%, transparent 100%);
   opacity: 0;
   z-index: -1;
   transition: opacity 0.3s;
@@ -313,8 +313,7 @@
 .headphones-cta:hover,
 .speakers-cta:hover {
   transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 4px 24px rgba(255,255,255,0.22);
-  background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+  /* background: linear-gradient(135deg, #ffffffff 0%, hsla(0, 0%, 100%, 1.00) 100%); */
 }
 
 .airpods-cta:hover::after,

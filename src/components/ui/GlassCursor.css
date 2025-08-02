@@ -1,0 +1,34 @@
+.cursor-inner-dot,
+.cursor-outer-splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 9999;
+}
+
+.cursor-inner-dot {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-outer-splash {
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+.cursor-splash-path {
+  fill: rgba(255, 255, 255, 0.2);
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1.5;
+  animation: wobble 8s infinite ease-in-out;
+}
