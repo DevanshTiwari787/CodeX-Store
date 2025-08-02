@@ -27,18 +27,18 @@ const productData = {
         }
     },
     headphones: {
-        name: 'Premium Headphones',
+        name: 'Headphones',
         price: '$299',
-        description: 'Premium Headphones feature studio-quality sound with deep bass, crisp highs, and active noise cancellation. The ergonomic over-ear design ensures comfort for long listening sessions, while Bluetooth 5.0 provides seamless wireless connectivity. Includes built-in microphone and intuitive touch controls.',
+        description: 'Premium Headphones feature studio-quality sound with deep bass, crisp highs and active noise cancellation. The over-ear design ensures comfort for long listening sessions, while Bluetooth 5.0 provides seamless wireless connectivity. Includes built-in microphone and touch controls.',
         colors: {
             white: headphonesImg,
             black: headphonesBlack,
         }
     },
     speakers: {
-        name: 'Smart Speakers',
+        name: 'Speakers',
         price: '$199',
-        description: 'Smart Speakers combine powerful audio with voice assistant integration for hands-free control. Enjoy rich, room-filling sound, multi-room connectivity, and modern design that fits any space. Stream music, control smart home devices, and get answers instantly with built-in voice recognition.',
+        description: 'Smart Speakers combine powerful audio with voice assistant integration for hands-free control. Enjoy rich, multi-room connectivity, and modern design that fits any space. Stream music, control smart home devices.',
         colors: {
             white: speakersImg,
             black: speakersBlack,
@@ -206,39 +206,128 @@ const HomePage: React.FC = () => {
     const product = productData[showProduct as keyof typeof productData];
     if (!product) return null;
 
+    // Responsive modal styles for small screens
+    const isMobile = window.innerWidth <= 900;
+
     return ReactDOM.createPortal(
       <div
         style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-          background: 'rgba(0,0,0,0.95)', zIndex: 9999, display: 'flex',
-          alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(5px)'
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.95)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backdropFilter: 'blur(5px)',
+          padding: isMobile ? '0.5rem' : '0'
         }}
         onClick={closeProduct}
       >
         <div
           style={{
-            width: '90vw', height: '90vh', display: 'flex',
-            flexDirection: window.innerWidth < 768 ? 'column' : 'row',
-            background: 'none', borderRadius: '2rem', overflow: 'hidden',
-            alignItems: 'center', justifyContent: 'center'
+            width: isMobile ? '98vw' : '90vw',
+            height: isMobile ? '98vh' : '90vh',
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            background: 'none',
+            borderRadius: isMobile ? '1rem' : '2rem',
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: isMobile ? '0.5rem' : '0',
           }}
           onClick={e => e.stopPropagation()}
         >
-          <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-            <img src={product.colors[selectedColor]} alt={product.name} style={{ width: '100%', maxWidth: '420px', height: '50vh', objectFit: 'contain', marginBottom: '2rem', filter: 'drop-shadow(0 10px 30px rgba(255,255,255,0.15))' }} />
+          <div style={{
+            flex: 1,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: isMobile ? '1rem 0.5rem' : '2rem'
+          }}>
+            <img
+              src={product.colors[selectedColor]}
+              alt={product.name}
+              style={{
+                width: isMobile ? '90vw' : '100%',
+                maxWidth: isMobile ? '320px' : '420px',
+                height: isMobile ? '32vh' : '50vh',
+                objectFit: 'contain',
+                marginBottom: '2rem',
+                filter: 'drop-shadow(0 10px 30px rgba(255,255,255,0.15))'
+              }}
+            />
             <div style={{ display: 'flex', gap: '1.2rem', marginBottom: '1.5rem' }}>
               {colorOptions.map(option => (
-                <button key={option.key} style={{ width: '40px', height: '40px', borderRadius: '50%', border: selectedColor === option.key ? '3px solid #fff' : '2px solid #fff', background: option.color, cursor: 'pointer', boxShadow: selectedColor === option.key ? '0 0 12px #fff' : 'none', transition: 'box-shadow 0.2s, border 0.2s' }} aria-label={option.label} onClick={() => setSelectedColor(option.key as 'white' | 'black')} />
+                <button key={option.key} style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  border: selectedColor === option.key ? '3px solid #fff' : '2px solid #fff',
+                  background: option.color,
+                  cursor: 'pointer',
+                  boxShadow: selectedColor === option.key ? '0 0 12px #fff' : 'none',
+                  transition: 'box-shadow 0.2s, border 0.2s'
+                }} aria-label={option.label} onClick={() => setSelectedColor(option.key as 'white' | 'black')} />
               ))}
             </div>
           </div>
-          <div style={{ flex: 1, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '2rem', overflowY: 'auto' }}>
-            <h2 style={{ fontSize: window.innerWidth < 768 ? '1.8rem' : '2.5rem', color: '#fff', marginBottom: '1.2rem', fontWeight: 800, textShadow: '0 8px 16px rgba(0,0,0,0.8)' }}>{product.name}</h2>
-            <div style={{ fontSize: window.innerWidth < 768 ? '1.3rem' : '1.7rem', color: '#fff', fontWeight: 700, marginBottom: '1.2rem', background: 'linear-gradient(135deg, #fff 0%, #60A5FA 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{product.price}</div>
-            <div style={{ fontSize: window.innerWidth < 768 ? '1rem' : '1.18rem', color: '#ccc', marginBottom: '2rem', lineHeight: '1.7', maxWidth: '90%' }}>{product.description}</div>
-            <button 
+          <div style={{
+            flex: 1,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: isMobile ? 'center' : 'flex-start',
+            padding: isMobile ? '1rem 0.5rem' : '2rem',
+            overflowY: 'auto',
+            textAlign: isMobile ? 'center' : 'left'
+          }}>
+            <h2 style={{
+              fontSize: isMobile ? '1.3rem' : '2.5rem',
+              color: '#fff',
+              marginBottom: '1.2rem',
+              fontWeight: 800,
+              textShadow: '0 8px 16px rgba(0,0,0,0.8)'
+            }}>{product.name}</h2>
+            <div style={{
+              fontSize: isMobile ? '1.1rem' : '1.7rem',
+              color: '#fff',
+              fontWeight: 700,
+              marginBottom: '1.2rem',
+              background: 'linear-gradient(135deg, #fff 0%, #60A5FA 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>{product.price}</div>
+            <div style={{
+              fontSize: isMobile ? '0.95rem' : '1.18rem',
+              color: '#ccc',
+              marginBottom: '2rem',
+              lineHeight: '1.7',
+              maxWidth: '90%'
+            }}>{product.description}</div>
+            <button
               className="airpods-cta"
-              style={{ width: '180px', background: 'none', border: '2px solid white', color: '#fff' }} 
+              style={{
+                width: isMobile ? '90vw' : '180px',
+                maxWidth: isMobile ? '320px' : '180px',
+                background: 'none',
+                border: '2px solid white',
+                color: '#fff',
+                fontSize: isMobile ? '1rem' : '1.1rem',
+                padding: isMobile ? '0.8rem 0' : '1rem 0',
+                margin: isMobile ? '0 auto' : '0',
+                display: 'block',
+                borderRadius: '50px',
+                transition: 'background 0.3s, color 0.3s'
+              }}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
